@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpBackend, HttpErrorResponse, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
 
 import { throwError, Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { catchError, filter, map } from 'rxjs/operators';
 @Injectable()
 export class RestangularHttp {
 
-  constructor(public http: HttpBackend) {
+  constructor(public http: HttpClient) {
   }
 
   createRequest(options): Observable<HttpEvent<any>> {
@@ -19,7 +19,7 @@ export class RestangularHttp {
   }
 
   request(request: HttpRequest<any>): Observable<HttpEvent<any>> {
-    return this.http.handle(request)
+    return this.http.request(request)
     .pipe(
       filter(event => event instanceof HttpResponse),
       map((response: any) => {
